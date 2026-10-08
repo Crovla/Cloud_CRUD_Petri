@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block head %}<meta
+  http-equiv="refresh"
+  content="30"
+/>{% endblock %} {% block content %}
+<h1>{{ s.name }}</h1>
+<div class="panel">
+  {% if s.image_key %}<img
+    src="{{ url_for('serve_file', key=s.image_key) }}"
+    alt="Photo of {{ s.name }}"
+  />{% endif %}
+  <dl>
+    <dt>Colony count</dt>
+    <dd>{{ s.colony_count }}</dd>
+    <dt>Temperature</dt>
+    <dd>{{ s.temperature }} °C</dd>
+    <dt>Pathogenic</dt>
+    <dd>{{ 'Yes' if s.is_pathogenic else 'No' }}</dd>
+    <dt>Incubation start</dt>
+    <dd>{{ s.incubation_started_on }}</dd>
+    <dt>Incubation end</dt>
+    <dd>{{ s.incubation_ends_on }}</dd>
+    <dt>Incubation status</dt>
+    <dd>
+      <span
+        class="badge {% if s.incubation_status == 'Need to check' %}attention{% endif %}"
+        >{{ s.incubation_status }}</span
+      >
+    </dd>
+  </dl>
+  <div class="row">
+    <a class="btn" href="{{ url_for('sample_form', id=s.id) }}">Edit</a>
+    <a class="btn ghost" href="{{ url_for('index') }}">Back to list</a>
+    <form
+      method="post"
+      action="{{ url_for('delete', id=s.id) }}"
+      onsubmit="return confirm('Delete this sample?');"
+    >
+      <button class="btn danger">Delete</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

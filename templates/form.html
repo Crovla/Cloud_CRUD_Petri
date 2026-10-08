@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ 'Edit sample' if editing else 'New sample' }}</h1>
+<form method="post" enctype="multipart/form-data" class="panel">
+  <label>Name
+    <input type="text" name="name" value="{{ v.get('name', '') }}" placeholder="E. coli pET-21c(+)">
+    {% if errors.name %}<span class="error">{{ errors.name }}</span>{% endif %}</label>
+  <label>Colony count (whole number)
+    <input type="text" name="colony_count" value="{{ v.get('colony_count', '') }}" inputmode="numeric">
+    {% if errors.colony_count %}<span class="error">{{ errors.colony_count }}</span>{% endif %}</label>
+  <label>Incubation temperature, °C
+    <input type="text" name="temperature" value="{{ v.get('temperature', '') }}" inputmode="decimal">
+    {% if errors.temperature %}<span class="error">{{ errors.temperature }}</span>{% endif %}</label>
+  <label>Incubation start
+    <input type="date" name="incubation_started_on" value="{{ v.get('incubation_started_on', '') }}" required>
+    {% if errors.incubation_started_on %}<span class="error">{{ errors.incubation_started_on }}</span>{% endif %}
+  </label>
+  <label>Incubation end
+    <input type="date" name="incubation_ends_on" value="{{ v.get('incubation_ends_on', '') }}" required>
+    {% if errors.incubation_ends_on %}<span class="error">{{ errors.incubation_ends_on }}</span>{% endif %}
+  </label>
+  <p class="muted">Once the selected day has ended, the status will change to “Needs to be checked”. </p>
+  <label>Incubation status
+    <select name="incubation_status">
+    {% for status in statuses %}
+      <option value="{{ status }}" {% if v.get('incubation_status', 'Incubating') == status %}selected{% endif %}>{{ status }}</option>
+    {% endfor %}
+    </select>
+    {% if errors.incubation_status %}<span class="error">{{ errors.incubation_status }}</span>{% endif %}
+  </label>
+  <label class="check">
+    <input type="checkbox" name="is_pathogenic" {% if v.get('is_pathogenic') in (true, 'on') %}checked{% endif %}> Pathogenic
+  </label>
+  {% if errors.is_pathogenic %}<span class="error">{{ errors.is_pathogenic }}</span>{% endif %}
+  <label>Plate photo (png or jpg, max 5 MB)
+    <input type="file" name="image" accept=".png,.jpg,.jpeg">
+    {% if errors.image %}<span class="error">{{ errors.image }}</span>{% endif %}</label>
+  <div class="row">
+    <button class="btn">Save sample</button>
+    <a class="btn ghost" href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block head %}<meta
+  http-equiv="refresh"
+  content="30"
+/>{% endblock %}{% block content %}
+<div class="bar">
+  <h1>Samples</h1>
+  <a class="btn" href="{{ url_for('sample_form') }}">Add sample</a>
+</div>
+{% if not samples %}
+<p class="muted">No samples yet. Add your first one to get started.</p>
+{% endif %}
+<div class="grid">
+  {% for s in samples %}
+  <a class="card" href="{{ url_for('detail', id=s.id) }}">
+    {% if s.image_key %}<img
+      src="{{ url_for('serve_file', key=s.image_key) }}"
+      alt=""
+    />{% else %}
+    <div class="noimg">No image</div>
+    {% endif %}
+    <div class="pad">
+      <strong>{{ s.name }}</strong>
+      <div class="muted">Incubation end: {{ s.incubation_ends_on }}</div>
+      <span
+        class="badge {% if s.incubation_status == 'Need to check' %}attention{% endif %}"
+        >{{ s.incubation_status }}</span
+      >
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

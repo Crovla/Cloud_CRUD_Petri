@@ -1,0 +1,11 @@
+flowchart LR
+  U["Naršyklė"] --> W
+  A["Viešo API klientas"] --> W
+  subgraph R["Render: vienas programos procesas"]
+    W["Flask: HTML ir CRUD API"]
+    B["Foninė gija: kas 30 s tikrina inkubavimo pabaigą"]
+    W -->|paleidžia| B
+  end
+  W --> D[("Supabase PostgreSQL")]
+  B -->|Inkubuojama → Reikia patikrinti| D
+  W --> S["Supabase Storage: nuotraukos per S3"]
