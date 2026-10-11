@@ -175,36 +175,83 @@ def detail(id):
 
 
 @app.route("/samples/new", methods=["GET", "POST"])
-@app.route("/samples/<int:id>/edit", methods=["GET", "POST"])
-def sample_form(id=None):
-    sample = db.get_or_404(Sample, id) if id else None
+def create_sample():
     errors = {}
+    values = {}
+
     if request.method == "POST":
         values = request.form
         clean, errors = validate(values)
+
         file = request.files.get("image")
         has_file = bool(file and file.filename)
+
         if has_file and file.filename.rsplit(".", 1)[-1].lower() not in ALLOWED:
             errors["image"] = "Only .png, .jpg or .jpeg files are allowed."
+
         if not errors:
-            if sample is None:
-                sample = Sample(**clean)
-                db.session.add(sample)
-            else:
-                for key, val in clean.items():
-                    setattr(sample, key, val)
+            sample = Sample(**clean)
+            db.session.add(sample)
+
+            if has_file:
+                sample.image_key = uuid.uuid4().hex + "." + file.filename.rsplit(".", 1)[-1].lower()
+                storage.save(sample.image_key, file.read(), file.mimetype)
+
+            db.session.commit()
+
+            flash("Sample created.")
+            return redirect(url_for("detail", id=sample.id))
+
+    return render_template(
+        "form.html",
+        v=values,
+        errors=errors,
+        editing=False,
+        statuses=STATUSES
+    )
+
+
+@app.route("/samples/<int:id>/edit", methods=["GET", "POST"])
+def edit_sample(id):
+    sample = db.get_or_404(Sample, id)
+    errors = {}
+
+    if request.method == "POST":
+        values = request.form
+        clean, errors = validate(values)
+
+        file = request.files.get("image")
+        has_file = bool(file and file.filename)
+
+        if has_file and file.filename.rsplit(".", 1)[-1].lower() not in ALLOWED:
+            errors["image"] = "Only .png, .jpg or .jpeg files are allowed."
+
+        if not errors:
+            for key, val in clean.items():
+                setattr(sample, key, val)
+
             if has_file:
                 if sample.image_key:
                     storage.delete(sample.image_key)
+
                 sample.image_key = uuid.uuid4().hex + "." + file.filename.rsplit(".", 1)[-1].lower()
                 storage.save(sample.image_key, file.read(), file.mimetype)
-            db.session.commit()
-            flash("Sample saved.")
-            return redirect(url_for("detail", id=sample.id))
-    else:
-        values = sample.to_dict() if sample else {}
-    return render_template("form.html", v=values, errors=errors, editing=sample is not None, statuses=STATUSES)
 
+            db.session.commit()
+
+            flash("Sample updated.")
+            return redirect(url_for("detail", id=sample.id))
+
+    else:
+        values = sample.to_dict()
+
+    return render_template(
+        "form.html",
+        v=values,
+        errors=errors,
+        editing=True,
+        statuses=STATUSES
+    )
 
 @app.post("/samples/<int:id>/delete")
 def delete(id):

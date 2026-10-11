@@ -3,13 +3,13 @@
 <h1>{{ 'Edit sample' if editing else 'New sample' }}</h1>
 <form method="post" enctype="multipart/form-data" class="panel">
   <label>Name
-    <input type="text" name="name" value="{{ v.get('name', '') }}" placeholder="E. coli pET-21c(+)">
+    <input type="text" name="name" value="{{ v.get('name', '') }}" placeholder="e.g. E. coli pET-21c(+)">
     {% if errors.name %}<span class="error">{{ errors.name }}</span>{% endif %}</label>
-  <label>Colony count (whole number)
-    <input type="text" name="colony_count" value="{{ v.get('colony_count', '') }}" inputmode="numeric">
+  <label>Colony count
+    <input type="text" name="colony_count" value="{{ v.get('colony_count', '') }}" inputmode="numeric" placeholder="e.g. Whole number">
     {% if errors.colony_count %}<span class="error">{{ errors.colony_count }}</span>{% endif %}</label>
   <label>Incubation temperature, °C
-    <input type="text" name="temperature" value="{{ v.get('temperature', '') }}" inputmode="decimal">
+    <input type="text" name="temperature" value="{{ v.get('temperature', '') }}" inputmode="decimal" placeholder="e.g. 37.8">
     {% if errors.temperature %}<span class="error">{{ errors.temperature }}</span>{% endif %}</label>
   <label>Incubation start
     <input type="date" name="incubation_started_on" value="{{ v.get('incubation_started_on', '') }}" required>
