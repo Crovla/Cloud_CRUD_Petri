@@ -128,7 +128,7 @@ def routes(app):
         return Response(data, mimetype="image/png" if key.endswith("png") else "image/jpeg")
 
 
-    # ---------- Public JSON API ----------
+# API
     @app.get("/api/samples")
     def api_list():
         return jsonify([s.to_dict() for s in Sample.query.order_by(Sample.id).all()])

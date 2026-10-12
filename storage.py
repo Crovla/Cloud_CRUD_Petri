@@ -1,6 +1,3 @@
-"""File storage. Local folder for development, S3-compatible bucket in the cloud.
-Switch by setting S3_BUCKET (+ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY,
-AWS_DEFAULT_REGION and, for non-AWS providers, S3_ENDPOINT)."""
 import os
 
 BUCKET = os.environ.get("S3_BUCKET")
