@@ -88,19 +88,25 @@ Kuriant ir redaguojant tikrinami tekstas, sveikasis skaičius, skaičius su trup
 
 ## Architektūra
 
-```mermaid
 flowchart LR
-  U["Naršyklė"] --> W
-  A["Viešo API klientas"] --> W
-  subgraph R["Render: vienas programos procesas"]
-    W["Flask: HTML ir CRUD API"]
-    B["Foninė gija: kas 30 s tikrina inkubavimo pabaigą"]
-    W -->|paleidžia| B
-  end
-  W --> D[("Supabase PostgreSQL")]
-  B -->|Inkubuojama → Reikia patikrinti| D
-  W --> S["Supabase Storage: nuotraukos per S3"]
-```
+    U["Web browser"]
+    A["Public API client"]
+
+    subgraph R["Render Web Service"]
+        subgraph APP["Python application"]
+            W["Flask<br/>Web pages and CRUD API"]
+            B["Background thread<br/>Checks incubation dates<br/>every ~30 seconds"]
+        end
+    end
+
+    D[("Supabase PostgreSQL<br/>Sample records")]
+    S["Supabase Storage<br/>Sample photos"]
+
+    U -->|"HTTP(S)"| W
+    A -->|"HTTP(S) / JSON"| W
+    W -->|"SQLAlchemy"| D
+    W -->|"S3 API / boto3"| S
+    B -->|"Updates incubation status"| D
 
 ## Patikrinimas
 
