@@ -43,6 +43,12 @@ flowchart LR
   "incubation_status": "Incubating"
 }
 ```
+```bash
+curl -i 'https://petri-log.onrender.com/api/samples'
+```
+```
+curl -i 'https://petri-log.onrender.com/api/samples/1'
+```
 
 ```bash
 curl -i -X POST 'https://petri-log.onrender.com/api/samples' \
