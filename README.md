@@ -22,7 +22,6 @@ flowchart LR
     W -->|"SQL via SQLAlchemy"| D
     W -->|"S3 API"| S
     B -->|"Updates incubation status"| D
-<<<<<<< HEAD
 ```
 
 ## Public API
