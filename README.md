@@ -32,8 +32,6 @@ flowchart LR
 - `PUT /api/samples/<id>` – update sample.
 - `DELETE /api/samples/<id>` – delete sample.
 
-POST ir PUT JSON pavyzdys:
-
 ```json
 {
   "name": "API demonstracija A",
