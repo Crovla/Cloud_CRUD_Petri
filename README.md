@@ -9,7 +9,7 @@ flowchart LR
     subgraph R["Render Web Service"]
         subgraph APP["Python application"]
             W["Flask<br/>Web pages and CRUD API"]
-            B["Background thread<br/>Checks incubation dates<br/>every ~30 seconds"]
+            B["Background thread<br/>Checks incubation dates<br/>every 10 seconds"]
         end
     end
 
