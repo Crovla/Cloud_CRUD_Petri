@@ -61,10 +61,10 @@ curl -i -X POST 'https://petri-log.onrender.com/api/samples' \
 ```
 
 ```bash
-curl -i -X PUT 'https://petri-log.onrender.com/api/samples/5’ \
+curl -i -X PUT 'https://petri-log.onrender.com/api/samples/5' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "API edited”,
+    "name": "API edited",
     "colony_count": 12,
     "temperature": 25.5,
     "is_pathogenic": true,
