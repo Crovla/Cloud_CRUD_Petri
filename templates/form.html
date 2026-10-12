@@ -19,7 +19,7 @@
     <input type="date" name="incubation_ends_on" value="{{ v.get('incubation_ends_on', '') }}" required>
     {% if errors.incubation_ends_on %}<span class="error">{{ errors.incubation_ends_on }}</span>{% endif %}
   </label>
-  <p class="muted">Once the selected day has ended, the status will change to “Needs to be checked”. </p>
+  <p class="muted">On the selected day, the status will change to “Needs to be checked”. </p>
   <label>Incubation status
     <select name="incubation_status">
     {% for status in statuses %}
