@@ -7,7 +7,7 @@ flowchart LR
     A["Public API client"]
 
     subgraph R["Render (PaaS)"]
-        subgraph APP["Python application — Web Service"]
+        subgraph APP["Python application"]
             W["Flask<br/>Web pages and CRUD API"]
             B["Background thread<br/>Checks incubation dates<br/>every ~10 seconds"]
         end
