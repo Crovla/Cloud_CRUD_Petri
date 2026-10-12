@@ -44,11 +44,11 @@ POST ir PUT JSON pavyzdys:
   "incubation_status": "Incubating"
 }
 ```
-
+```bash
 curl -i -X POST 'https://petri-log.onrender.com/api/samples' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "API demonstracija A",
+    "name": "API demonstration",
     "colony_count": 12,
     "temperature": 25.5,
     "is_pathogenic": false,
@@ -56,11 +56,13 @@ curl -i -X POST 'https://petri-log.onrender.com/api/samples' \
     "incubation_ends_on": "2026-10-20",
     "incubation_status": "Incubating"
   }'
+```
 
-curl -i -X PUT 'https://petri-log.onrender.com/api/samples/xxxxx' \
+```bash
+curl -i -X PUT 'https://petri-log.onrender.com/api/samples/**xxxx**' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "API demonstracija A",
+    "name": "API demonstration",
     "colony_count": 12,
     "temperature": 25.5,
     "is_pathogenic": true,
@@ -68,3 +70,4 @@ curl -i -X PUT 'https://petri-log.onrender.com/api/samples/xxxxx' \
     "incubation_ends_on": "2026-10-20",
     "incubation_status": "Incubating"
   }'
+```
