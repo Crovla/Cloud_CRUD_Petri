@@ -61,10 +61,10 @@ curl -i -X POST 'https://petri-log.onrender.com/api/samples' \
 ```
 
 ```bash
-curl -i -X PUT 'https://petri-log.onrender.com/api/samples/**xxxx**' \
+curl -i -X PUT 'https://petri-log.onrender.com/api/samples/5’ \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "API demonstration",
+    "name": "API edited”,
     "colony_count": 12,
     "temperature": 25.5,
     "is_pathogenic": true,
@@ -72,4 +72,8 @@ curl -i -X PUT 'https://petri-log.onrender.com/api/samples/**xxxx**' \
     "incubation_ends_on": "2026-10-20",
     "incubation_status": "Incubating"
   }'
+```
+
+```bash
+curl -i -X DELETE 'https://petri-log.onrender.com/api/samples/5'
 ```
