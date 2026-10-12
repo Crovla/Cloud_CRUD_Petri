@@ -6,19 +6,21 @@ flowchart LR
     U["Web browser"]
     A["Public API client"]
 
-    subgraph R["Render Web Service"]
-        subgraph APP["Python application"]
+    subgraph R["Render (PaaS)"]
+        subgraph APP["Python application — Web Service"]
             W["Flask<br/>Web pages and CRUD API"]
-            B["Background thread<br/>Checks incubation dates<br/>every 10 seconds"]
+            B["Background thread<br/>Checks incubation dates<br/>every ~10 seconds"]
         end
     end
 
-    D[("Supabase PostgreSQL<br/>Sample records")]
-    S["Supabase Storage<br/>Sample photos"]
+    subgraph SB["Supabase (BaaS)"]
+        D[("PostgreSQL database<br/>Sample records")]
+        S["Storage<br/>Sample photos"]
+    end
 
     U -->|"HTTP(S)"| W
     A -->|"HTTP(S) / JSON"| W
-    W -->|"SQLAlchemy"| D
+    W -->|"SQL via SQLAlchemy"| D
     W -->|"S3 API"| S
     B -->|"Updates incubation status"| D
 ```
