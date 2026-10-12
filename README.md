@@ -12,7 +12,7 @@ flowchart LR
         end
     end
 
-    subgraph SB["Supabase (BaaS)"]
+    subgraph SB["Supabase"]
         D[("PostgreSQL database<br/>Sample records")]
         S["Storage<br/>Sample photos"]
     end
